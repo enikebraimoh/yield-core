@@ -1,6 +1,4 @@
-package com.yield.core.controller.farmer
-
-import java.util.UUID
+package com.yield.core.controller.user
 
 data class FarmerRequest(
     val phoneNumber : String,
