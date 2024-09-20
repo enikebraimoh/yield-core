@@ -1,6 +1,7 @@
 package com.yield.core.service
 
 import com.yield.core.model.User
+import com.yield.core.model.UserOtherInfo
 import com.yield.core.repository.UserRepository
 import org.springframework.stereotype.Service
 import java.util.*
@@ -18,6 +19,9 @@ class UserService(private val userRepository: UserRepository) {
 
 
     fun findById(id: UUID): User? = userRepository.findById(id)
+
+    fun updateOtherInfo(id : UUID, data: UserOtherInfo): User? = userRepository.updateOtherInfo(id,data)
+
 
     fun findByPhoneNumber(phoneNumber: String): User? = userRepository.findByPhoneNumber(phoneNumber)
 

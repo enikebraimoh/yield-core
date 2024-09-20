@@ -1,6 +1,7 @@
 package com.yield.core.repository
 
 import com.yield.core.model.User
+import com.yield.core.model.UserOtherInfo
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Repository
 import java.util.*
@@ -44,6 +45,16 @@ class UserRepository(
     fun findByPhoneNumber(phoneNumber: String): User? = users.firstOrNull { it.phoneNumber == phoneNumber }
 
     fun findAll(): List<User> = users
+
+    fun updateOtherInfo(id : UUID, data: UserOtherInfo): User? {
+       val foundUser =  users.firstOrNull { it.id == id }
+        if (foundUser != null) {
+            users.add(foundUser)
+        }
+       return foundUser?.copy(otherInfo = data )
+
+    }
+
 
     fun findById(id: UUID): User? = users.firstOrNull { it.id == id }
 

@@ -10,6 +10,12 @@ enum class ErrorType(val status: HttpStatus, val code: ErrorCode, val message: S
         message = "An unexpected error has occurred.",
         logLevel = LogLevel.ERROR
     ),
+    CONFLICT(
+        status = HttpStatus.CONFLICT,
+        code = ErrorCode.E500,
+        message = "An unexpected error has occurred.",
+        logLevel = LogLevel.ERROR
+    ),
 }
 
 data class ErrorMessage private constructor(

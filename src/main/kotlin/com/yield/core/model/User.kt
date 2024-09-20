@@ -10,5 +10,14 @@ data class User(
     val phoneNumber: String,
     val dob : String,
     val gender : String,
-    val password : String
+    var password : String? = null,
+    val otherInfo: UserOtherInfo? = null,
+)
+
+data class UserOtherInfo(
+    val farmName : String?,
+    val farmLocation : String?,
+    val farmDuration : String?,
+    val farmSize: String?,
+    val farmingType : String?,
 )
