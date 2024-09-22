@@ -1,22 +1,21 @@
 package com.yield.core.controller.user
 
-import java.util.*
 
-data class UserResponse(
-    val id : UUID,
-    val firstName : String,
-    val middleName : String,
-    val lastName : String?,
-    val phoneNumber: String,
-    val dob : String,
-    val gender : String,
-    val otherInfo: UserOtherInfoResponse?,
+ class  UserResponse(
+    val id : Long = 0,
+    val firstName: String? = null,
+    val middleName: String = "",
+    val lastName: String? = null,
+    val phoneNumber: String = "",
+    val dob: String = "",
+    val gender: String = "",
+    val otherInfo: UserOtherInfoResponse? = null,
 )
 
-data class UserOtherInfoResponse(
-    val farm_name : String?,
-    val farm_location : String?,
-    val farm_duraion : String?,
-    val farm_size: String?,
-    val farming_type : String?,
+class UserOtherInfoResponse(
+    val farmName: String? = null,
+    val farmLocation: String? = null,
+    val farmDuration: String? = null,
+    val farmSize: String? = null,
+    val farmingType: String? = null,
 )

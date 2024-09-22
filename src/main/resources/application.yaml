@@ -1,8 +1,16 @@
+jwt:
+  key: ${JWT_KEY}
+  access-token-expiration: 3600000
+  refresh-token-expiration: 3600000
 
 spring:
-  application : Yield
-
-jwt:
- key : ${JWT_KEY}
- access-token-expiration : 3600000
- refresh-token-expiration : 3600000
+  application:
+    name: Yield
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: changemeinprod!
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
