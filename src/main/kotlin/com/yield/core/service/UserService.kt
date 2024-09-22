@@ -16,7 +16,7 @@ class UserService(
 
     fun findById(id: Long): Optional<User> = userRepository.findById(id)
 
-    fun isExists(id: Long): Boolean = userRepository.findById(id).isPresent
+    fun isExists(phoneNumber: String): Boolean = userRepository.findByPhoneNumber(phoneNumber).isPresent
 
     //    fun updateOtherInfo(id : UUID, data: UserOtherInfo): User
     //
@@ -24,6 +24,8 @@ class UserService(
     //
 
     fun findAll(): List<User> = userRepository.findAll().toList()
+
+    fun findByPhone(phoneNumber : String) : Optional<User> = userRepository.findByPhoneNumber(phoneNumber)
 
     fun updateUserInfo(id: Long, userOtherInfo: UserOtherInfo): User {
         val user = findById(id).get()

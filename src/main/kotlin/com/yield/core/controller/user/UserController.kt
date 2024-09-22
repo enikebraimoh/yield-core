@@ -6,6 +6,7 @@ import com.yield.core.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatusCode
 import org.springframework.http.ResponseEntity
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import java.util.Optional
 
@@ -15,13 +16,20 @@ class UserController(
     private val userService: UserService,
 ) {
 
-    @PostMapping
-    fun create(@RequestBody user: UserResponse): ResponseEntity<UserResponse> {
-        return ResponseEntity(
-            userService.createUser(user.toModel()).toResponse(),
-            HttpStatus.CREATED
-        )
-    }
+//    @PostMapping
+//    fun create(@RequestBody user: UserResponse): ResponseEntity<UserResponse> {
+//
+//        return if (!userService.isExists(user.phoneNumber)) {
+//            ResponseEntity(
+//                userService.createUser(user.toModel().copy(password = encoder.encode(user.password))).toResponse(),
+//                HttpStatus.CREATED
+//            )
+//        } else {
+//            ResponseEntity(
+//                HttpStatus.NOT_FOUND
+//            )
+//        }
+//    }
 
     @GetMapping
     fun listAll(): List<User> = userService.findAll()
@@ -44,7 +52,7 @@ class UserController(
         @PathVariable id: Long,
         @RequestBody otherInfo: UserOtherInfoResponse
     ): ResponseEntity<UserResponse> {
-        val foundUser = userService.isExists(id)
+        val foundUser = userService.findById(id).isPresent
         if (!foundUser) {
             return ResponseEntity(HttpStatus.NOT_FOUND)
         }
@@ -54,16 +62,10 @@ class UserController(
         return ResponseEntity(updatedUser.toResponse(), HttpStatus.OK)
     }
 
-    //    @PutMapping("/other-info/{id}")
-//    fun updateOtherIfo(
-//        @RequestBody otherInfo: UserOtherInfoResponse,
-//        @PathVariable id: UUID
-//    ): ApiResponse<UserResponse> =
-//        userService.updateOtherInfo(id, otherInfo.toModel())
-//            .let { it?.let { it1 -> ApiResponse.success(it1.toResponse()) } }
-//            ?: ApiResponse.error(error = ErrorType.CONFLICT, "could not update user")
-//
-//
+
+
+
+    // MAPPERS
     private fun UserResponse.toModel(): User = User(
         id = id,
         firstName = firstName,
@@ -72,7 +74,8 @@ class UserController(
         phoneNumber = phoneNumber,
         dob = dob,
         gender = gender,
-        otherInfo = otherInfo?.toModel()
+        otherInfo = otherInfo?.toModel(),
+        password = password
     )
 
     private fun User.toResponse(): UserResponse = UserResponse(
@@ -83,7 +86,8 @@ class UserController(
         phoneNumber = phoneNumber,
         dob = dob,
         gender = gender,
-        otherInfo = otherInfo?.toResponse()
+        otherInfo = otherInfo?.toResponse(),
+        password = null
     )
 
     private fun UserOtherInfoResponse.toModel(): UserOtherInfo = UserOtherInfo(
